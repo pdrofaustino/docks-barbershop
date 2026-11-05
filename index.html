@@ -44,6 +44,38 @@ a:focus-visible,button:focus-visible{outline:2px solid #203746;outline-offset:3p
 @media (max-width:1000px){.svc-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){.svc-cards{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.svc-card,.svc-filters label{transition:none}.svc-card:hover{transform:none}}
+
+.ag-dlg{width:min(580px,94vw);max-height:92vh;padding:0;border:0;border-radius:24px;background:#FAF8F5;color:#211C19;box-shadow:0 30px 80px rgba(18,34,44,.45);overflow:hidden}
+.ag-dlg::backdrop{background:rgba(18,34,44,.62)}
+.ag-wrap{display:flex;flex-direction:column;max-height:92vh}
+.ag-head{display:flex;align-items:center;gap:12px;padding:20px 24px 14px;border-bottom:1px solid #E4D6C3}
+.ag-head h2{margin:0;flex:1;font-family:'Playfair Display',Georgia,serif;font-weight:500;font-size:26px;line-height:1.15;color:#203746;outline:0}
+.ag-step{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#7A4B20;font-weight:600}
+.ag-icon{min-width:44px;min-height:44px;border:1px solid #CBB296;background:#FFFFFF;border-radius:12px;cursor:pointer;font-size:20px;line-height:1;color:#203746}
+.ag-body{padding:20px 24px 24px;overflow:auto}
+.ag-group{margin:0 0 6px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#7A4B20;font-weight:600}
+.ag-list{display:flex;flex-direction:column;gap:10px;margin:0 0 20px}
+.ag-opt{display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;width:100%;min-height:52px;padding:12px 16px;border:1px solid #CBB296;border-radius:14px;background:#FFFFFF;color:#211C19;font:inherit;font-weight:600;cursor:pointer;transition:border-color .2s ease,background-color .2s ease}
+.ag-opt small{font-weight:400;color:#3D352F;font-size:14px}
+.ag-opt:hover{border-color:#203746;background:#F0E8DD}
+.ag-days{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 12px;margin:0 -2px}
+.ag-day{flex:0 0 auto;min-width:76px;min-height:64px;border:1px solid #CBB296;border-radius:14px;background:#FFFFFF;color:#211C19;font:inherit;font-size:14px;line-height:1.3;cursor:pointer;padding:8px 10px}
+.ag-day b{display:block;font-size:16px}
+.ag-day[aria-pressed=true]{background:#203746;border-color:#203746;color:#FFFFFF}
+.ag-day:disabled{opacity:.4;cursor:not-allowed;background:#F0E8DD}
+.ag-slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:10px;margin-top:8px}
+.ag-slot{min-height:46px;border:1px solid #203746;border-radius:12px;background:#FFFFFF;color:#203746;font:inherit;font-weight:600;cursor:pointer}
+.ag-slot:hover{background:#203746;color:#FFFFFF}
+.ag-field{display:flex;flex-direction:column;gap:6px;margin:0 0 16px;font-weight:600;font-size:15px}
+.ag-field input{min-height:50px;padding:0 14px;border:1px solid #8E7A66;border-radius:12px;font:inherit;font-weight:400;background:#FFFFFF;color:#211C19}
+.ag-sum{background:#F0E8DD;border-radius:14px;padding:14px 16px;margin:0 0 18px;font-size:15px;line-height:1.6}
+.ag-cta{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 28px;border:0;border-radius:999px;background:#203746;color:#FFFFFF;font:inherit;font-weight:600;cursor:pointer;text-decoration:none;width:100%;box-sizing:border-box}
+.ag-cta[disabled]{opacity:.6;cursor:wait}
+.ag-cta.alt{background:#FFFFFF;color:#203746;border:1px solid #203746;margin-top:10px}
+.ag-err{color:#8A1C1C;font-weight:600;margin:0 0 14px;font-size:15px}
+.ag-note{font-size:13px;color:#3D352F;margin:12px 0 0;line-height:1.5}
+body.ag-open{overflow:hidden}
+@media (prefers-reduced-motion:reduce){.ag-opt{transition:none}}
 .services-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
 .insta-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 @media (max-width:900px){.insta-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -249,7 +281,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #203746;outline-offset:3p
 <div style="flex: 1 1 260px; background: #FFFFFF; border: 1px solid #CBB296; border-radius: 20px; padding: 32px 28px">
 <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 40px; color: #B87942; line-height: 1">03</div>
 <h3 style="margin: 18px 0 8px; font-size: 18px; font-weight: 600">Confirme o horário</h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3D352F">Combine o melhor dia e hora pelo WhatsApp.</p>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3D352F">Veja os horários livres e confirme na hora, sem precisar falar com ninguém.</p>
 </div>
 </div>
 <div style="margin-top: 40px">
@@ -278,7 +310,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #203746;outline-offset:3p
 <div aria-hidden="true" style="position: absolute; inset: 0; background: rgba(24,44,56,0.8)"></div>
 <div style="position: relative; z-index: 1">
 <h2 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 500; font-size: clamp(32px, 4.4vw, 52px); line-height: 1.12; color: #FFFFFF">Reserve seu momento na Docks.</h2>
-<p style="margin: 18px auto 0; font-size: 17px; line-height: 1.6; max-width: 440px; color: #F0E8DD">Fale com a gente pelo WhatsApp e escolha o melhor horário.</p>
+<p style="margin: 18px auto 0; font-size: 17px; line-height: 1.6; max-width: 440px; color: #F0E8DD">Escolha o serviço, o profissional e o horário em poucos cliques.</p>
 <a class="btn" href="https://wa.me/5519993106255?text=Ol%C3%A1!%20Quero%20agendar%20um%20hor%C3%A1rio%20na%20Docks%20Barbershop." style="margin-top: 32px; text-decoration: none; background: #B87942; color: #211C19; padding: 0 34px; min-height: 52px; display: inline-flex; align-items: center; border-radius: 999px; font-weight: 600; font-size: 16px">Agendar agora</a>
 </div>
 </div>
@@ -345,6 +377,16 @@ a:focus-visible,button:focus-visible{outline:2px solid #203746;outline-offset:3p
 
 </div>
 
+<dialog id="agendar" class="ag-dlg" aria-labelledby="ag-title">
+<div class="ag-wrap">
+<div class="ag-head">
+<button type="button" class="ag-icon" id="ag-back" aria-label="Voltar" hidden>←</button>
+<div style="flex:1;min-width:0"><div class="ag-step" id="ag-step"></div><h2 id="ag-title" tabindex="-1">Agendar horário</h2></div>
+<button type="button" class="ag-icon" id="ag-close" aria-label="Fechar">×</button>
+</div>
+<div class="ag-body" id="ag-body" aria-live="polite"></div>
+</div>
+</dialog>
 <script src="https://elfsightcdn.com/platform.js" async></script>
 <script>
 (function(){
@@ -353,6 +395,55 @@ function set(o){menu.hidden=!o;btn.setAttribute('aria-expanded',o?'true':'false'
 btn.addEventListener('click',function(){set(menu.hidden);});
 document.querySelectorAll('[data-close-menu]').forEach(function(a){a.addEventListener('click',function(){set(false);});});
 document.getElementById('ano').textContent=new Date().getFullYear();
+})();
+
+(function(){
+var SB_URL='https://vtssoqpxgounsakvkhrm.supabase.co',SB_KEY='sb_publishable_HSes25Bv7EDhpAFy9gxg7w_dEoa6nEI',TZ='America/Sao_Paulo',WA='5519993106255';
+var dlg=document.getElementById('agendar'),bodyEl=document.getElementById('ag-body'),titleEl=document.getElementById('ag-title'),stepEl=document.getElementById('ag-step'),backBtn=document.getElementById('ag-back'),closeBtn=document.getElementById('ag-close');
+if(!dlg||typeof dlg.showModal!=='function')return;
+var catalog=null,S={},step=1;
+function esc(t){return String(t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function rpc(fn,args){return fetch(SB_URL+'/rest/v1/rpc/'+fn,{method:'POST',headers:{'apikey':SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(args||{})}).then(function(r){if(!r.ok)throw new Error('http '+r.status);return r.json()})}
+var fDay=new Intl.DateTimeFormat('pt-BR',{timeZone:TZ,weekday:'short'}),fDM=new Intl.DateTimeFormat('pt-BR',{timeZone:TZ,day:'2-digit',month:'2-digit'}),fTime=new Intl.DateTimeFormat('pt-BR',{timeZone:TZ,hour:'2-digit',minute:'2-digit'}),fLong=new Intl.DateTimeFormat('pt-BR',{timeZone:TZ,weekday:'long',day:'numeric',month:'long'});
+function todayISO(){return new Intl.DateTimeFormat('en-CA',{timeZone:TZ}).format(new Date())}
+function addDays(iso,n){var d=new Date(iso+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)}
+function noon(iso){return new Date(iso+'T12:00:00-03:00')}
+function waLink(msg){return 'https://wa.me/'+WA+'?text='+encodeURIComponent(msg)}
+function svcById(id){return catalog.services.filter(function(x){return x.id===id})[0]}
+function profById(id){return catalog.professionals.filter(function(x){return x.id===id})[0]}
+var TITLES={1:'Escolha o serviço',2:'Escolha o profissional',3:'Escolha dia e horário',4:'Seus dados',5:'Horário confirmado'};
+function head(n){step=n;stepEl.textContent=n<5?('Passo '+n+' de 4'):'Pronto';titleEl.textContent=TITLES[n];backBtn.hidden=(n===1||n===5)}
+function focusTitle(){titleEl.focus()}
+function fallback(msg){stepEl.textContent='';titleEl.textContent='Agendar horário';backBtn.hidden=true;bodyEl.innerHTML='<p style="margin:0 0 16px;line-height:1.6">'+esc(msg)+'</p><a class="ag-cta" href="'+waLink('Olá! Quero agendar um horário na Docks Barbershop.')+'">Agendar pelo WhatsApp</a>'}
+function stepServices(){head(1);var cats=['Cabelo','Barba','Estética'],h='';cats.forEach(function(c){var l=catalog.services.filter(function(x){return x.category===c});if(!l.length)return;h+='<p class="ag-group">'+esc(c)+'</p><div class="ag-list">'+l.map(function(x){return '<button type="button" class="ag-opt" data-svc="'+x.id+'"><span>'+esc(x.name)+'</span><small>'+x.duration_min+' min</small></button>'}).join('')+'</div>'});bodyEl.innerHTML=h;focusTitle()}
+function stepProf(){head(2);var ps=catalog.professionals.filter(function(p){return p.service_ids.indexOf(S.service)>-1});if(!ps.length){fallback('No momento não há profissionais disponíveis para este serviço no agendamento online.');return}var h='<div class="ag-list"><button type="button" class="ag-opt" data-prof=""><span>Sem preferência</span><small>primeiro horário livre</small></button>'+ps.map(function(p){return '<button type="button" class="ag-opt" data-prof="'+p.id+'"><span>'+esc(p.name)+'</span></button>'}).join('')+'</div>';bodyEl.innerHTML=h;focusTitle()}
+function stepTimes(){head(3);bodyEl.innerHTML='<p>Carregando horários…</p>';focusTitle();var t=todayISO(),days=[];for(var i=0;i<14;i++)days.push(addDays(t,i));
+Promise.all(days.map(function(d){return rpc('get_available_slots',{p_service:S.service,p_professional:S.prof||null,p_date:d}).then(function(r){return {d:d,slots:r}})})).then(function(res){S.days=res;var any=res.some(function(x){return x.slots.length});if(!any){bodyEl.innerHTML='<p style="margin:0 0 16px;line-height:1.6">Não há horários livres nos próximos 14 dias para esta escolha. Tente outro profissional ou fale com a gente.</p><a class="ag-cta" href="'+waLink('Olá! Não encontrei horário no site. Quero agendar na Docks Barbershop.')+'">Falar no WhatsApp</a>';return}
+var first=res.filter(function(x){return x.slots.length})[0].d;S.date=S.date&&res.some(function(x){return x.d===S.date&&x.slots.length})?S.date:first;renderDays()}).catch(function(){fallback('Não foi possível carregar os horários agora. Você pode agendar pelo WhatsApp.')})}
+function renderDays(){var h='<div class="ag-days" role="group" aria-label="Dias disponíveis">'+S.days.map(function(x){var n=noon(x.d);return '<button type="button" class="ag-day" data-day="'+x.d+'" aria-pressed="'+(x.d===S.date)+'"'+(x.slots.length?'':' disabled')+'><span>'+esc(fDay.format(n).replace('.',''))+'</span><b>'+fDM.format(n)+'</b></button>'}).join('')+'</div>';var cur=S.days.filter(function(x){return x.d===S.date})[0],seen={},slots=[];cur.slots.forEach(function(s){if(!seen[s.slot]){seen[s.slot]=1;slots.push(s)}});h+='<p class="ag-group" style="margin-top:8px">'+esc(fLong.format(noon(S.date)))+'</p><div class="ag-slots">'+slots.map(function(s){return '<button type="button" class="ag-slot" data-slot="'+s.slot+'">'+fTime.format(new Date(s.slot))+'</button>'}).join('')+'</div>';bodyEl.innerHTML=h}
+function summary(){var sv=svcById(S.service),p=S.prof?profById(S.prof):null,when=new Date(S.slot);return '<div class="ag-sum"><strong>'+esc(sv.name)+'</strong> · '+sv.duration_min+' min<br>'+esc(fLong.format(when))+' às '+fTime.format(when)+'<br>'+(p?'Com '+esc(p.name):'Profissional: primeiro disponível')+'</div>'}
+function stepForm(err){head(4);bodyEl.innerHTML=summary()+(err?'<p class="ag-err" role="alert">'+esc(err)+'</p>':'')+'<form id="ag-form" novalidate><label class="ag-field">Seu nome<input name="nome" type="text" autocomplete="name" maxlength="80" required value="'+esc(S.nome||'')+'"></label><label class="ag-field">WhatsApp com DDD<input name="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="(19) 90000-0000" required value="'+esc(S.tel||'')+'"></label><button class="ag-cta" type="submit">Confirmar agendamento</button><p class="ag-note">Usamos seus dados apenas para este agendamento.</p></form>';focusTitle()}
+function stepDone(r){head(5);var sv=svcById(S.service),a=new Date(r.starts_at),b=new Date(r.ends_at);function z(d){return d.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'')}
+var cal='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent('Docks Barbershop · '+sv.name)+'&dates='+z(a)+'/'+z(b)+'&location='+encodeURIComponent('Av. Cel. Silva Telles, 1002, Cambuí, Campinas - SP')+'&details='+encodeURIComponent('Atendimento com '+r.professional);
+bodyEl.innerHTML='<div class="ag-sum"><strong>'+esc(sv.name)+'</strong><br>'+esc(fLong.format(a))+' às '+fTime.format(a)+'<br>Com '+esc(r.professional)+'<br>Av. Cel. Silva Telles, 1002 · Cambuí, Campinas</div><p style="margin:0 0 16px;line-height:1.6">Tudo certo, '+esc(S.nome)+'! Seu horário está reservado. Chegue com alguns minutos de antecedência.</p><a class="ag-cta" href="'+cal+'" target="_blank" rel="noopener">Adicionar ao Google Agenda</a><a class="ag-cta alt" href="'+waLink('Olá! Acabei de agendar '+sv.name+' para '+fLong.format(a)+' às '+fTime.format(a)+'. Nome: '+S.nome)+'">Avisar a barbearia no WhatsApp</a><button type="button" class="ag-cta alt" data-close>Fechar</button>';focusTitle()}
+function open(serviceName){S={};document.body.classList.add('ag-open');if(!dlg.open)dlg.showModal();bodyEl.innerHTML='<p>Carregando…</p>';stepEl.textContent='';titleEl.textContent='Agendar horário';backBtn.hidden=true;
+(catalog?Promise.resolve(catalog):rpc('get_catalog').then(function(c){catalog=c;return c})).then(function(c){if(!c.professionals.length||!c.services.length){fallback('O agendamento online estará disponível em breve. Por enquanto, agende pelo WhatsApp.');return}var m=serviceName&&c.services.filter(function(x){return x.name.toLowerCase()===serviceName.toLowerCase()})[0];if(m){S.service=m.id;stepProf()}else stepServices()}).catch(function(){fallback('Não foi possível abrir o agendamento agora. Você pode agendar pelo WhatsApp.')})}
+function close(){if(dlg.open)dlg.close()}
+dlg.addEventListener('close',function(){document.body.classList.remove('ag-open')});
+dlg.addEventListener('click',function(e){if(e.target===dlg)close()});
+closeBtn.addEventListener('click',close);
+backBtn.addEventListener('click',function(){if(step===2)stepServices();else if(step===3)stepProf();else if(step===4)stepTimes()});
+bodyEl.addEventListener('click',function(e){var t=e.target.closest('button');if(!t)return;
+if(t.hasAttribute('data-close'))return close();
+if(t.dataset.svc){S.service=t.dataset.svc;S.prof='';S.date='';return stepProf()}
+if(t.hasAttribute('data-prof')){S.prof=t.getAttribute('data-prof');S.date='';return stepTimes()}
+if(t.dataset.day){S.date=t.dataset.day;return renderDays()}
+if(t.dataset.slot){S.slot=t.dataset.slot;return stepForm()}});
+bodyEl.addEventListener('submit',function(e){e.preventDefault();var f=e.target,nome=f.nome.value.trim(),tel=f.tel.value.trim(),digits=tel.replace(/\D/g,'');S.nome=nome;S.tel=tel;
+if(nome.length<2)return stepForm('Informe seu nome.');if(digits.length<10||digits.length>13)return stepForm('Informe um WhatsApp válido com DDD.');
+var btn=f.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Confirmando…';
+rpc('create_booking',{p_service:S.service,p_professional:S.prof||null,p_starts_at:S.slot,p_name:nome,p_phone:digits}).then(function(r){if(r&&r.ok)return stepDone(r);var m={slot_taken:'Esse horário acabou de ser reservado. Escolha outro.',limit_reached:'Este número já tem 3 agendamentos futuros. Fale com a gente para alterar.',invalid_phone:'Informe um WhatsApp válido com DDD.',invalid_name:'Informe seu nome.'}[r&&r.error]||'Não foi possível confirmar. Tente novamente.';if(r&&r.error==='slot_taken'){S.slot='';stepTimes();return}stepForm(m)}).catch(function(){stepForm('Falha de conexão. Tente novamente.')})});
+document.querySelectorAll('a[href*="Quero%20agendar"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var c=a.closest('.svc-card'),n=c&&c.querySelector('h3');open(n?n.textContent.trim():'')})});
 })();
 </script>
 </body>
