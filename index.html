@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Docks Barbershop · Estilo, cuidado e experiência</title>
+<meta name="description" content="Docks Barbershop, barbearia no Cambuí, em Campinas. Corte masculino, barba e tratamentos em um ambiente confortável. Agende pelo WhatsApp.">
+<meta name="theme-color" content="#FAF8F5">
+<meta property="og:title" content="Docks Barbershop · Cambuí, Campinas">
+<meta property="og:description" content="Estilo, cuidado e experiência. Agende seu horário pelo WhatsApp.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/interior-banner.webp">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FAF8F5;color:#25211E;font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth}
+a{color:inherit}
+section{scroll-margin-top:96px}
+a:focus-visible,button:focus-visible{outline:2px solid #25211E;outline-offset:3px;border-radius:4px}
+.btn{transition:background-color .2s ease,transform .2s ease,opacity .2s ease}
+.btn:hover{transform:translateY(-1px);opacity:.92}
+.lift{transition:transform .25s ease,box-shadow .25s ease}
+.lift:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(37,33,30,.08)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.reveal{animation:fadeUp .7s ease both}
+.nav-desktop{display:flex}
+.nav-toggle{display:none}
+.services-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.insta-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:900px){.insta-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:1000px){.services-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.services-grid{grid-template-columns:1fr}}
+@media (max-width:900px){.nav-desktop{display:none}.nav-toggle{display:inline-flex}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{animation:none}.btn,.lift{transition:none}.btn:hover,.lift:hover{transform:none}}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:900px){.reviews-grid{grid-template-columns:1fr}}
+
+#menu-mobile[hidden]{display:none !important}
+</style>
+</head>
+<body>
+<div style="background: #FAF8F5; color: #25211E; font-family: 'Inter', system-ui, sans-serif; min-height: 100vh">
+
+<!-- 01 Cabeçalho -->
+<header style="position: sticky; top: 0; z-index: 20; background: #FAF8F5; border-bottom: 1px solid #DFD2C4">
+<div style="max-width: 1240px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px">
+<a href="#inicio" aria-label="Docks Barbershop, ir ao início" style="display: inline-flex; align-items: center; min-height: 44px; text-decoration: none"><img src="assets/logo.svg" alt="Docks Barbershop" width="68" height="64" style="display: block; width: 68px; height: 64px"></a>
+<nav class="nav-desktop" aria-label="Principal" style="align-items: center; gap: 4px 28px; font-size: 15px">
+<a href="#inicio" style="text-decoration: none; padding: 12px 0">Início</a>
+<a href="#servicos" style="text-decoration: none; padding: 12px 0">Serviços</a>
+<a href="#barbearia" style="text-decoration: none; padding: 12px 0">A Barbearia</a>
+<a href="#experiencia" style="text-decoration: none; padding: 12px 0">Experiência</a>
+<a href="#avaliacoes" style="text-decoration: none; padding: 12px 0">Avaliações</a>
+<a href="#contato" style="text-decoration: none; padding: 12px 0">Contato</a>
+<a class="btn" href="https://wa.me/5519993106255?text=Ol%C3%A1!%20Quero%20agendar%20um%20hor%C3%A1rio%20na%20Docks%20Barbershop." style="text-decoration: none; background: #8F5A28; color: #FFFFFF; padding: 0 22px; min-height: 44px; display: inline-flex; align-items: center; border-radius: 999px; font-weight: 500">Agendar horário</a>
+</nav>
+<div class="nav-toggle" style="align-items: center; gap: 8px">
+<a class="btn" href="https://wa.me/5519993106255?text=Ol%C3%A1!%20Quero%20agendar%20um%20hor%C3%A1rio%20na%20Docks%20Barbershop." style="text-decoration: none; background: #8F5A28; color: #FFFFFF; padding: 0 16px; min-height: 44px; display: inline-flex; align-items: center; border-radius: 999px; font-weight: 500; font-size: 14px">Agendar</a>
+<button type="button" id="menu-btn" aria-expanded="false" aria-controls="menu-mobile" aria-label="Abrir menu" style="min-width: 44px; min-height: 44px; background: transparent; border: 1px solid #DFD2C4; border-radius: 10px; cursor: pointer; color: #25211E; display: inline-flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
+</div>
+</div>
+
+<nav id="menu-mobile" hidden aria-label="Menu mobile" style="border-top: 1px solid #DFD2C4; background: #FAF8F5; padding: 8px 24px 20px; display: flex; flex-direction: column">
+<a href="#inicio" data-close-menu style="text-decoration: none; padding: 14px 0; border-bottom: 1px solid #DFD2C4">Início</a>
+<a href="#servicos" data-close-menu style="text-decoration: none; padding: 14px 0; border-bottom: 1px solid #DFD2C4">Serviços</a>
+<a href="#barbearia" data-close-menu style="text-decoration: none; padding: 14px 0; border-bottom: 1px solid #DFD2C4">A Barbearia</a>
+<a href="#experiencia" data-close-menu style="text-decoration: none; padding: 14px 0; border-bottom: 1px solid #DFD2C4">Experiência</a>
+<a href="#avaliacoes" data-close-menu style="text-decoration: none; padding: 14px 0; border-bottom: 1px solid #DFD2C4">Avaliações</a>
+<a href="#contato" data-close-menu style="text-decoration: none; padding: 14px 0">Contato</a>
+</nav>
+
+</header>
+
+<main>
+
+<!-- 02 Hero -->
+<section id="inicio" style="max-width: 1240px; margin: 0 auto; padding: 24px 24px 56px">
+<div style="position: relative; overflow: hidden; border-radius: 28px; min-height: 600px; display: flex; align-items: center; background: linear-gradient(135deg, #4A3A2E 0%, #2B221B 100%)">
+<img src="assets/interior-banner.webp" alt="Interior da Docks Barbershop com cadeiras de couro caramelo, bancada de madeira e luminárias pendentes" fetchpriority="high" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% 50%">
+<div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(25,20,16,0.88) 0%, rgba(25,20,16,0.6) 45%, rgba(25,20,16,0.2) 100%)"></div>
+<div class="reveal" style="position: relative; z-index: 1; padding: 72px 56px; max-width: 620px; box-sizing: border-box">
+<p style="margin: 0 0 20px; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #F2EAE0; font-weight: 500">Docks Barbershop</p>
+<h1 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(38px, 5.6vw, 72px); line-height: 1.06; letter-spacing: -0.01em; color: #FFFFFF">Estilo, cuidado e <em style="font-style: italic; color: #E8B77A">experiência.</em></h1>
+<p style="margin: 24px 0 0; font-size: 18px; line-height: 1.65; color: #F2EAE0; max-width: 460px">Uma barbearia no Cambuí pensada para quem valoriza conforto, atenção aos detalhes e um ambiente à altura.</p>
+<div style="margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px">
+<a class="btn" href="https://wa.me/5519993106255?text=Ol%C3%A1!%20Quero%20agendar%20um%20hor%C3%A1rio%20na%20Docks%20Barbershop." style="text-decoration: none; background: #E8B77A; color: #25211E; padding: 0 30px; min-height: 52px; display: inline-flex; align-items: center; border-radius: 999px; font-weight: 600; font-size: 16px">Agendar seu horário</a>
+<a class="btn" href="#barbearia" style="text-decoration: none; color: #FFFFFF; padding: 0 30px; min-height: 52px; display: inline-flex; align-items: center; border-radius: 999px; border: 1px solid rgba(255,255,255,0.7); font-weight: 500; font-size: 16px">Conheça a Docks</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 03 Diferenciais -->
+<section aria-label="Diferenciais" style="max-width: 1240px; margin: 0 auto; padding: 0 24px 80px">
+<div style="background: #F2EAE0; border: 1px solid #DFD2C4; border-radius: 20px; padding: 32px; display: flex; flex-wrap: wrap; gap: 28px 24px">
+<div style="flex: 1 1 200px; display: flex; align-items: center; gap: 14px">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#AD713A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.8 2.8L16 9.5"/></svg>
+<span style="font-size: 16px; font-weight: 500; line-height: 1.3">Atendimento cuidadoso</span>
+</div>
+<div style="flex: 1 1 200px; display: flex; align-items: center; gap: 14px">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#AD713A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12l3 5-9 11L3 9z"/><path d="M3 9h18M9 4l-2 5 5 11M15 4l2 5-5 11"/></svg>
+<span style="font-size: 16px; font-weight: 500; line-height: 1.3">Ambiente sofisticado</span>
+</div>
+<div style="flex: 1 1 200px; display: flex; align-items: center; gap: 14px">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#AD713A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3h4v3h-4zM8 6h8v15H8z"/><path d="M8 11h8"/></svg>
+<span style="font-size: 16px; font-weight: 500; line-height: 1.3">Produtos de qualidade</span>
+</div>
+<div style="flex: 1 1 200px; display: flex; align-items: center; gap: 14px">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#AD713A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11V8a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v3"/><path d="M3 13a2 2 0 0 1 4 0v2h10v-2a2 2 0 0 1 4 0v5H3z"/><path d="M6 18v2M18 18v2"/></svg>
+<span style="font-size: 16px; font-weight: 500; line-height: 1.3">Conforto</span>
+</div>
+</div>
+</section>
+
+<!-- 04 Serviços -->
+<section id="servicos" style="max-width: 1240px; margin: 0 auto; padding: 0 24px 96px">
+<div style="max-width: 560px; margin-bottom: 48px">
+<p style="margin: 0 0 14px; font-size: 13px; letter-spacing: 0.24em; text-transform: uppercase; color: #8F5A28; font-weight: 500">Serviços</p>
+<h2 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(30px, 4vw, 48px); line-height: 1.12">Cuidado do corte à barba.</h2>
+</div>
+<div class="services-grid">
+<article class="lift" style="background: #FFFFFF; border: 1px solid #DFD2C4; border-radius: 20px; padding: 32px 24px; display: flex; flex-direction: column; gap: 14px">
+<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#AD713A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 7.5 20 18M8.5 16.5 20 6"/></svg>
+<h3 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: 22px; white-space: nowrap">Corte masculino</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #5E554D; flex: 1">[Descrição breve do serviço]</p>
+<a href="https://wa.me/5519993106255?text=Ol%C3%A1!%20Quero%20agendar%20corte%20masculino%20na%20Docks%20Barbershop." style="color: #8F5A28; font-weight: 500; text-decoration: none; min-height: 44px; display: inline-flex; align-items: center">Agendar →</a>
+</article>
+<article class="lift" style="background: #FFFFFF; border: 1px solid #DFD2C4; border-radius: 20px; padding: 32px 24px; display: flex; flex-direction: column; gap: 14px">
+<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#AD713A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14 15 4l4 4L8 18z"/><path d="m4 14-1 6 6-1"/></svg>
+<h3 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: 22px; white-space: nowrap">Barba</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #5E554D; flex: 1">[Descrição breve do serviço]</p>
+<a href="https://wa.me/5519993106255?text=Ol%C3%A1!%20Quero%20agendar%20barba%20na%20Docks%20Barbershop." style="color: #8F5A28; font-weight: 500; text-decoration: none; min-height: 44px; display: inline-flex; align-items: center">Agendar →</a>
+</article>
+<article class="lift" style="background: #FFFFFF; border: 1px solid #DFD2C4; border-radius: 20px; padding: 32px 24px; display: flex; flex-direction: column; gap: 14px">
+<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#AD713A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="6" r="2.5"/><circle cx="5" cy="18" r="2.5"/><path d="M7 7.5 15 16M7 16.5 15 8"/><path d="M17 4h4v6h-4zM17 14h4v6h-4z"/></svg>
+<h3 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: 22px; white-space: nowrap">Corte + barba</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #5E554D; flex: 1">[Descrição breve do serviço]</p>
+<a href="https://wa.me/5519993106255?text=Ol%C3%A1!%20Quero%20agendar%20corte%20e%20barba%20na%20Docks%20Barbershop." style="color: #8F5A28; font-weight: 500; text-decoration: none; min-height: 44px; display: inline-flex; align-items: center">Agendar →</a>
+</article>
+<article class="lift" style="background: #FFFFFF; border: 1px solid #DFD2C4; border-radius: 20px; padding: 32px 24px; display: flex; flex-direction: column; gap: 14px">
+<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#AD713A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/><path d="M9.5 15a2.5 2.5 0 0 0 2.5 2.5"/></svg>
+<h3 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: 22px; white-space: nowrap">Tratamentos capilares</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #5E554D; flex: 1">[Descrição breve do serviço, se oferecido]</p>
+<a href="https://wa.me/5519993106255?text=Ol%C3%A1!%20Quero%20saber%20sobre%20tratamentos%20capilares%20na%20Docks%20Barbershop." style="color: #8F5A28; font-weight: 500; text-decoration: none; min-height: 44px; display: inline-flex; align-items: center">Agendar →</a>
+</article>
+</div>
+</section>
+
+<!-- 05 A experiência Docks -->
+<section id="barbearia" style="background: #F2EAE0; border-top: 1px solid #DFD2C4; border-bottom: 1px solid #DFD2C4">
+<div style="max-width: 1240px; margin: 0 auto; padding: 96px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 56px">
+<div id="experiencia" style="flex: 1 1 340px">
+<p style="margin: 0 0 14px; font-size: 13px; letter-spacing: 0.24em; text-transform: uppercase; color: #8F5A28; font-weight: 500">A experiência Docks</p>
+<h2 style="margin: 0 0 24px; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(30px, 4vw, 48px); line-height: 1.12">Um espaço pensado em cada detalhe.</h2>
+<p style="margin: 0 0 18px; font-size: 17px; line-height: 1.7; color: #25211E">A Docks Barbershop fica no Cambuí, em Campinas. Móveis, equipamentos e profissionais trabalham juntos para que a visita seja confortável do começo ao fim.</p>
+<p style="margin: 0 0 32px; font-size: 17px; line-height: 1.7; color: #5E554D">Mais do que cortar o cabelo, a proposta é um atendimento personalizado, em que você se olha no espelho e gosta do resultado.</p>
+<a class="btn" href="https://wa.me/5519993106255?text=Ol%C3%A1!%20Quero%20agendar%20um%20hor%C3%A1rio%20na%20Docks%20Barbershop." style="text-decoration: none; background: #8F5A28; color: #FFFFFF; padding: 0 30px; min-height: 52px; display: inline-flex; align-items: center; border-radius: 999px; font-weight: 500; font-size: 16px">Agendar seu horário</a>
+</div>
+<img src="assets/interior-cadeiras.webp" alt="Área de atendimento da Docks com cadeiras de barbeiro em couro caramelo, bancada de madeira e espelhos" loading="lazy" style="flex: 1.2 1 440px; min-width: 0; height: 540px; display: block; object-fit: cover; border-radius: 24px; border: 1px solid #DFD2C4">
+</div>
+</section>
+
+<!-- 06 Instagram -->
+<section id="instagram" style="max-width: 1240px; margin: 0 auto; padding: 96px 24px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 40px">
+<div style="max-width: 560px">
+<p style="margin: 0 0 14px; font-size: 13px; letter-spacing: 0.24em; text-transform: uppercase; color: #8F5A28; font-weight: 500">Instagram</p>
+<h2 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(30px, 4vw, 48px); line-height: 1.12">Acompanhe @docksbarbershop.</h2>
+</div>
+<a class="btn" href="https://www.instagram.com/docksbarbershop" target="_blank" rel="noopener" style="text-decoration: none; background: #8F5A28; color: #FFFFFF; padding: 0 28px; min-height: 48px; display: inline-flex; align-items: center; border-radius: 999px; font-weight: 500; font-size: 15px">Seguir no Instagram</a>
+</div>
+<!-- Elfsight Instagram Feed | Untitled Instagram Feed -->
+<div class="elfsight-app-e84cbb74-9ed0-46d7-a3e6-c4ec27b89462" data-elfsight-app-lazy></div>
+</section>
+
+<!-- 07 Processo de agendamento -->
+<section id="agendamento" style="background: #F2EAE0; border-top: 1px solid #DFD2C4; border-bottom: 1px solid #DFD2C4">
+<div style="max-width: 1240px; margin: 0 auto; padding: 96px 24px">
+<div style="max-width: 560px; margin-bottom: 48px">
+<p style="margin: 0 0 14px; font-size: 13px; letter-spacing: 0.24em; text-transform: uppercase; color: #8F5A28; font-weight: 500">Agendamento</p>
+<h2 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(30px, 4vw, 48px); line-height: 1.12">Três passos simples.</h2>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 20px">
+<div style="flex: 1 1 260px; background: #FFFFFF; border: 1px solid #DFD2C4; border-radius: 20px; padding: 32px 28px">
+<div style="font-family: 'Playfair Display', Georgia, serif; font-size: 40px; color: #AD713A; line-height: 1">01</div>
+<h3 style="margin: 18px 0 8px; font-size: 18px; font-weight: 600">Escolha o serviço</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #5E554D">Diga se quer corte, barba ou os dois.</p>
+</div>
+<div style="flex: 1 1 260px; background: #FFFFFF; border: 1px solid #DFD2C4; border-radius: 20px; padding: 32px 28px">
+<div style="font-family: 'Playfair Display', Georgia, serif; font-size: 40px; color: #AD713A; line-height: 1">02</div>
+<h3 style="margin: 18px 0 8px; font-size: 18px; font-weight: 600">Selecione o profissional</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #5E554D">Se tiver preferência, é só informar o nome.</p>
+</div>
+<div style="flex: 1 1 260px; background: #FFFFFF; border: 1px solid #DFD2C4; border-radius: 20px; padding: 32px 28px">
+<div style="font-family: 'Playfair Display', Georgia, serif; font-size: 40px; color: #AD713A; line-height: 1">03</div>
+<h3 style="margin: 18px 0 8px; font-size: 18px; font-weight: 600">Confirme o horário</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #5E554D">Combine o melhor dia e hora pelo WhatsApp.</p>
+</div>
+</div>
+<div style="margin-top: 40px">
+<a class="btn" href="https://wa.me/5519993106255?text=Ol%C3%A1!%20Quero%20agendar%20um%20hor%C3%A1rio%20na%20Docks%20Barbershop." style="text-decoration: none; background: #8F5A28; color: #FFFFFF; padding: 0 30px; min-height: 52px; display: inline-flex; align-items: center; border-radius: 999px; font-weight: 500; font-size: 16px">Agendar agora</a>
+</div>
+</div>
+</section>
+
+<!-- 08 Avaliações (oculta até haver depoimentos autorizados) -->
+
+<section id="avaliacoes" style="max-width: 1240px; margin: 0 auto; padding: 96px 24px">
+<div style="max-width: 560px; margin-bottom: 40px">
+<p style="margin: 0 0 14px; font-size: 13px; letter-spacing: 0.24em; text-transform: uppercase; color: #8F5A28; font-weight: 500">Avaliações</p>
+<h2 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(30px, 4vw, 48px); line-height: 1.12">O que dizem sobre a Docks.</h2>
+</div>
+<div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px 24px; margin-bottom:32px"><p style="margin:0; font-size:17px; color:#25211E"><span style="color:#AD713A">★</span> 4,7 de 5 no Google · 29 avaliações</p><a href="https://www.google.com/maps/search/?api=1&amp;query=Docks+Barbershop+Av.+Cel.+Silva+Telles+1002+Campinas" target="_blank" rel="noopener" style="color:#8F5A28; font-weight:500; text-decoration:none; min-height:44px; display:inline-flex; align-items:center">Ver todas no Google →</a></div>
+<!-- Elfsight Google Reviews | Untitled Google Reviews -->
+<div class="elfsight-app-8b8e86e2-0692-4fed-bfd4-b751713669bf" data-elfsight-app-lazy></div>
+</section>
+
+
+<!-- 09 CTA final -->
+<section style="max-width: 1240px; margin: 0 auto; padding: 96px 24px 0">
+<div style="position: relative; overflow: hidden; background: #25211E; color: #FFFFFF; border-radius: 28px; padding: 96px 32px; text-align: center">
+<img src="assets/tesouras.webp" alt="" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%">
+<div aria-hidden="true" style="position: absolute; inset: 0; background: rgba(25,20,16,0.64)"></div>
+<div style="position: relative; z-index: 1">
+<h2 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(32px, 4.4vw, 52px); line-height: 1.12">Reserve seu momento na Docks.</h2>
+<p style="margin: 18px auto 0; font-size: 17px; line-height: 1.6; max-width: 440px; color: #F2EAE0">Fale com a gente pelo WhatsApp e escolha o melhor horário.</p>
+<a class="btn" href="https://wa.me/5519993106255?text=Ol%C3%A1!%20Quero%20agendar%20um%20hor%C3%A1rio%20na%20Docks%20Barbershop." style="margin-top: 32px; text-decoration: none; background: #E8B77A; color: #25211E; padding: 0 34px; min-height: 52px; display: inline-flex; align-items: center; border-radius: 999px; font-weight: 600; font-size: 16px">Agendar agora</a>
+</div>
+</div>
+</section>
+
+<!-- 10 Localização e contato -->
+<section id="contato" style="max-width: 1240px; margin: 0 auto; padding: 96px 24px; display: flex; flex-wrap: wrap; gap: 56px 80px">
+<div style="flex: 1 1 320px">
+<p style="margin: 0 0 14px; font-size: 13px; letter-spacing: 0.24em; text-transform: uppercase; color: #8F5A28; font-weight: 500">Localização e contato</p>
+<h2 style="margin: 0 0 28px; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(30px, 4vw, 48px); line-height: 1.12">Venha nos visitar.</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.7">Av. Cel. Silva Telles, 1002<br>Cambuí Corporate · Cambuí<br>Campinas · SP · 13024-001</p>
+<p style="margin: 20px 0 0; font-size: 17px; line-height: 1.9">
+<a href="https://wa.me/5519993106255" style="text-decoration: none">WhatsApp e telefone: (19) 99310-6255</a><br>
+<a href="https://www.instagram.com/docksbarbershop" style="text-decoration: none">Instagram: @docksbarbershop</a></p>
+<a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Docks+Barbershop+Av.+Cel.+Silva+Telles+1002+Campinas" style="margin-top: 28px; text-decoration: none; color: #25211E; padding: 0 28px; min-height: 48px; display: inline-flex; align-items: center; border-radius: 999px; border: 1px solid #25211E; font-weight: 500; font-size: 15px">Traçar rota</a>
+</div>
+<div style="flex: 1 1 320px">
+<h3 style="margin: 0 0 20px; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: 28px">Horários</h3>
+<div style="display: flex; flex-direction: column; font-size: 17px">
+<div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #DFD2C4"><span>Segunda</span><span style="color: #5E554D">Fechado</span></div>
+<div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #DFD2C4"><span>Terça a sábado</span><span>11h às 21h</span></div>
+<div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #DFD2C4; border-bottom: 1px solid #DFD2C4"><span>Domingo</span><span style="color: #5E554D">Fechado</span></div>
+</div>
+</div>
+<div style="flex: 1 1 100%; border-radius: 20px; overflow: hidden; border: 1px solid #DFD2C4; height: 380px"><iframe title="Mapa: Docks Barbershop, Av. Cel. Silva Telles, 1002, Cambuí, Campinas" src="https://www.google.com/maps?q=Av.+Cel.+Silva+Telles,+1002,+Campinas+SP&amp;output=embed" width="100%" height="100%" style="border:0; display:block" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
+</section>
+
+</main>
+
+<!-- 11 Rodapé -->
+<footer style="background: #F2EAE0; border-top: 1px solid #DFD2C4">
+<div style="max-width: 1240px; margin: 0 auto; padding: 56px 24px 32px; display: flex; flex-wrap: wrap; gap: 40px 64px; justify-content: space-between">
+<div style="flex: 1 1 240px">
+<img src="assets/logo.svg" alt="Docks Barbershop" width="111" height="104" style="display: block; width: 111px; height: 104px">
+<p style="margin: 16px 0 0; font-size: 14px; line-height: 1.6; color: #5E554D">Cambuí · Campinas, SP</p>
+</div>
+<nav aria-label="Rodapé" style="flex: 1 1 200px; display: flex; flex-direction: column; font-size: 15px">
+<a href="#servicos" style="text-decoration: none; padding: 8px 0">Serviços</a>
+<a href="#barbearia" style="text-decoration: none; padding: 8px 0">A Barbearia</a>
+<a href="#instagram" style="text-decoration: none; padding: 8px 0">Instagram</a>
+<a href="#contato" style="text-decoration: none; padding: 8px 0">Contato</a>
+</nav>
+<div style="flex: 1 1 240px; display: flex; flex-direction: column; font-size: 15px">
+<a href="https://wa.me/5519993106255" style="text-decoration: none; padding: 8px 0">(19) 99310-6255</a>
+<a href="https://www.instagram.com/docksbarbershop" style="text-decoration: none; padding: 8px 0">@docksbarbershop</a>
+<span style="padding: 8px 0; color: #5E554D">Política de Privacidade (em breve)</span>
+</div>
+</div>
+<div style="max-width: 1240px; margin: 0 auto; padding: 20px 24px 32px; border-top: 1px solid #DFD2C4; font-size: 13px; color: #5E554D">© <span id="ano">2026</span> Docks Barbershop. Todos os direitos reservados.</div>
+</footer>
+
+</div>
+
+<script src="https://elfsightcdn.com/platform.js" async></script>
+<script>
+(function(){
+var btn=document.getElementById('menu-btn'),menu=document.getElementById('menu-mobile');
+function set(o){menu.hidden=!o;btn.setAttribute('aria-expanded',o?'true':'false');}
+btn.addEventListener('click',function(){set(menu.hidden);});
+document.querySelectorAll('[data-close-menu]').forEach(function(a){a.addEventListener('click',function(){set(false);});});
+document.getElementById('ano').textContent=new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
