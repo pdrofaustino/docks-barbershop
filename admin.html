@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel · Docks Barbershop</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF8F5;color:#211C19;font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:500;color:#203746;margin:0}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid #203746;outline-offset:2px}
+.top{background:#203746;color:#fff;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.top h1{color:#fff;font-size:22px;flex:1}
+.top span{font-size:14px;color:#D5DEE4}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+.tabs{display:flex;gap:8px;margin:0 0 24px;flex-wrap:wrap}
+.tab{min-height:44px;padding:0 20px;border:1px solid #CBB296;border-radius:999px;background:#fff;color:#203746;font-weight:600;cursor:pointer}
+.tab[aria-pressed=true]{background:#203746;border-color:#203746;color:#fff}
+.card{background:#fff;border:1px solid #CBB296;border-radius:16px;padding:20px;margin:0 0 20px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+.fld{display:flex;flex-direction:column;gap:4px;font-size:14px;font-weight:600}
+.fld input,.fld select,.in{min-height:42px;padding:0 10px;border:1px solid #8E7A66;border-radius:10px;background:#fff;font-weight:400}
+.btn{min-height:42px;padding:0 18px;border:0;border-radius:999px;background:#203746;color:#fff;font-weight:600;cursor:pointer}
+.btn.alt{background:#fff;color:#203746;border:1px solid #203746}
+.btn.sm{min-height:36px;padding:0 14px;font-size:14px}
+.btn.danger{background:#fff;color:#8A1C1C;border:1px solid #8A1C1C}
+.btn[disabled]{opacity:.6;cursor:wait}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{text-align:left;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7A4B20;padding:8px 10px;border-bottom:1px solid #CBB296}
+td{padding:10px;border-bottom:1px solid #EADDCB;vertical-align:middle}
+.badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:13px;font-weight:600;background:#F0E8DD}
+.badge.confirmed{background:#DCE8F0;color:#203746}.badge.done{background:#DDEBDD;color:#1F5A2B}.badge.cancelled{background:#F0DADA;color:#8A1C1C}.badge.no_show{background:#F2E6C9;color:#7A4B20}
+.muted{color:#3D352F;font-size:14px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#203746;color:#fff;padding:12px 20px;border-radius:12px;font-weight:600;z-index:50;max-width:90vw}
+.toast.err{background:#8A1C1C}
+.chk{display:inline-flex;align-items:center;gap:6px;margin:0 14px 6px 0;font-size:15px}
+.chk input{width:18px;height:18px}
+.wh{display:grid;grid-template-columns:90px 1fr;gap:6px 12px;align-items:start;margin:12px 0}
+.wh .ints{display:flex;flex-direction:column;gap:6px}
+.wh .int{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.login{max-width:420px;margin:12vh auto;padding:0 24px}
+.sep{height:1px;background:#EADDCB;margin:16px 0}
+.scroll{overflow-x:auto}
+@media (max-width:700px){.wrap{padding:16px}.wh{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+var SB_URL='https://vtssoqpxgounsakvkhrm.supabase.co',SB_KEY='sb_publishable_HSes25Bv7EDhpAFy9gxg7w_dEoa6nEI',TZ='America/Sao_Paulo';
+var sb=window.supabase.createClient(SB_URL,SB_KEY);
+var app=document.getElementById('app');
+var D={services:[],pros:[],ps:[],wh:[],off:[]};
+var tab='agenda',agendaDate=todayISO();
+var CAT=['Cabelo','Barba','Estética'];
+var DAYS=[[1,'Segunda'],[2,'Terça'],[3,'Quarta'],[4,'Quinta'],[5,'Sexta'],[6,'Sábado'],[0,'Domingo']];
+var STATUS={confirmed:'Confirmado',done:'Concluído',cancelled:'Cancelado',no_show:'Faltou'};
+function h(t,a){var e=document.createElement(t),k,v;a=a||{};for(k in a){v=a[k];if(v==null||v===false)continue;if(k==='class')e.className=v;else if(k==='value')e.value=v;else if(k==='checked')e.checked=!!v;else if(k.slice(0,2)==='on')e.addEventListener(k.slice(2),v);else e.setAttribute(k,v===true?'':v)}
+for(var i=2;i<arguments.length;i++)add(e,arguments[i]);return e}
+function add(e,c){if(c==null||c===false)return;if(Array.isArray(c))c.forEach(function(x){add(e,x)});else e.append(c.nodeType?c:document.createTextNode(String(c)))}
+function todayISO(){return new Intl.DateTimeFormat('en-CA',{timeZone:TZ}).format(new Date())}
+function addDays(iso,n){var d=new Date(iso+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)}
+var fTime=new Intl.DateTimeFormat('pt-BR',{timeZone:TZ,hour:'2-digit',minute:'2-digit'}),fLong=new Intl.DateTimeFormat('pt-BR',{timeZone:TZ,weekday:'long',day:'numeric',month:'long',year:'numeric'}),fShort=new Intl.DateTimeFormat('pt-BR',{timeZone:TZ,day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+function toast(m,err){var t=h('div',{class:'toast'+(err?' err':''),role:'status'},m);document.body.append(t);setTimeout(function(){t.remove()},3500)}
+function fail(e){console.error(e);toast('Erro: '+(e&&e.message||e),true)}
+function digits(s){return String(s||'').replace(/\D/g,'')}
+function hhmm(t){return String(t).slice(0,5)}
+function localToISO(v){return v?new Date(v+':00-03:00').toISOString():null}
+
+/* ---------- auth ---------- */
+function loginView(msg){app.replaceChildren(h('div',{class:'login'},
+ h('h1',{style:'margin-bottom:6px'},'Painel Docks'),
+ h('p',{class:'muted',style:'margin:0 0 20px'},'Acesso restrito à equipe da barbearia.'),
+ h('form',{onsubmit:function(e){e.preventDefault();signIn(e.target)}},
+  h('label',{class:'fld',style:'margin-bottom:12px'},'E-mail',h('input',{name:'email',type:'email',autocomplete:'username',required:true})),
+  h('label',{class:'fld',style:'margin-bottom:16px'},'Senha',h('input',{name:'pw',type:'password',autocomplete:'current-password',minlength:'8',required:true})),
+  h('button',{class:'btn',type:'submit',style:'width:100%'},'Entrar'),
+  h('button',{class:'btn alt',type:'button',style:'width:100%;margin-top:10px',onclick:function(ev){signUp(ev.target.form)}},'Criar acesso (primeiro uso)')),
+ msg?h('p',{role:'alert',style:'margin-top:16px;font-weight:600'},msg):null))}
+function signIn(f){sb.auth.signInWithPassword({email:f.email.value.trim(),password:f.pw.value}).then(function(r){if(r.error)return loginView('E-mail ou senha incorretos, ou e-mail ainda não confirmado.');boot()})}
+function signUp(f){if(!f.reportValidity())return;sb.auth.signUp({email:f.email.value.trim(),password:f.pw.value}).then(function(r){if(r.error)return loginView(r.error.message);loginView('Enviamos um e-mail de confirmação. Clique no link e depois volte aqui para entrar.')})}
+function boot(){sb.auth.getSession().then(function(r){var s=r.data.session;if(!s)return loginView();sb.rpc('is_admin').then(function(x){if(x.error||!x.data){return app.replaceChildren(h('div',{class:'login'},h('h1',null,'Sem permissão'),h('p',null,'O e-mail '+s.user.email+' não tem acesso ao painel. Peça para ser incluído.'),h('button',{class:'btn',onclick:logout},'Sair')))}loadAll().then(function(){shell(s.user.email)}).catch(fail)})})}
+function logout(){sb.auth.signOut().then(function(){loginView()})}
+
+/* ---------- data ---------- */
+function q(p){return p.then(function(r){if(r.error)throw r.error;return r.data})}
+function loadAll(){return Promise.all([q(sb.from('services').select('*').order('sort').order('name')),q(sb.from('professionals').select('*').order('sort').order('name')),q(sb.from('professional_services').select('*')),q(sb.from('working_hours').select('*').order('start_time')),q(sb.from('time_off').select('*').gte('ends_at',new Date().toISOString()).order('starts_at'))]).then(function(r){D.services=r[0];D.pros=r[1];D.ps=r[2];D.wh=r[3];D.off=r[4]})}
+function reload(){return loadAll().then(render)}
+
+/* ---------- shell ---------- */
+var main;
+function shell(email){
+ var tabs=h('div',{class:'tabs',role:'group','aria-label':'Seções'},[['agenda','Agenda'],['pros','Profissionais'],['svcs','Serviços']].map(function(t){return h('button',{class:'tab',type:'button','aria-pressed':String(tab===t[0]),onclick:function(){tab=t[0];shell(email)}},t[1])}));
+ main=h('div',null);
+ app.replaceChildren(h('div',{class:'top'},h('h1',null,'Painel Docks'),h('span',null,email),h('button',{class:'btn alt sm',onclick:logout},'Sair')),h('div',{class:'wrap'},tabs,main));render()}
+function render(){if(!main)return;main.replaceChildren();if(tab==='agenda')agendaView();else if(tab==='pros')prosView();else svcsView()}
+
+/* ---------- agenda ---------- */
+function agendaView(){
+ var list=h('div',null,h('p',{class:'muted'},'Carregando…'));
+ var dateIn=h('input',{type:'date',value:agendaDate,'aria-label':'Dia',onchange:function(e){if(e.target.value){agendaDate=e.target.value;agendaView()}}});
+ main.append(
+  h('div',{class:'card'},h('div',{class:'row'},
+   h('button',{class:'btn alt sm',onclick:function(){agendaDate=addDays(agendaDate,-1);agendaView()}},'← Dia anterior'),
+   h('label',{class:'fld'},'Dia',dateIn),
+   h('button',{class:'btn alt sm',onclick:function(){agendaDate=addDays(agendaDate,1);agendaView()}},'Próximo dia →'),
+   h('button',{class:'btn sm',onclick:function(){agendaDate=todayISO();agendaView()}},'Hoje'))),
+  h('div',{class:'card'},h('h2',{style:'font-size:24px;margin-bottom:12px;text-transform:capitalize'},fLong.format(new Date(agendaDate+'T12:00:00-03:00'))),list),
+  manualForm());
+ var a=new Date(agendaDate+'T00:00:00-03:00').toISOString(),b=new Date(addDays(agendaDate,1)+'T00:00:00-03:00').toISOString();
+ q(sb.from('appointments').select('*,services(name,duration_min),professionals(name)').gte('starts_at',a).lt('starts_at',b).order('starts_at')).then(function(rows){
+  if(!rows.length){list.replaceChildren(h('p',{class:'muted'},'Nenhum agendamento neste dia.'));return}
+  var act=rows.filter(function(r){return r.status==='confirmed'||r.status==='done'}).length;
+  list.replaceChildren(h('p',{class:'muted',style:'margin:0 0 10px'},act+' agendamento(s) ativo(s) · '+rows.length+' no total'),h('div',{class:'scroll'},h('table',null,
+   h('thead',null,h('tr',null,['Horário','Cliente','WhatsApp','Serviço','Profissional','Status','Ações'].map(function(x){return h('th',null,x)}))),
+   h('tbody',null,rows.map(apptRow)))))}).catch(fail)}
+function apptRow(r){
+ var d=digits(r.customer_phone),wa=d.length<=11?'55'+d:d;
+ function setStatus(s){return function(){q(sb.from('appointments').update({status:s}).eq('id',r.id)).then(function(){toast('Atualizado');agendaView()}).catch(fail)}}
+ var acts=[];
+ if(r.status==='confirmed'){acts.push(h('button',{class:'btn sm',onclick:setStatus('done')},'Concluir'),h('button',{class:'btn alt sm',onclick:setStatus('no_show')},'Faltou'),h('button',{class:'btn danger sm',onclick:function(){if(confirm('Cancelar o agendamento de '+r.customer_name+'?'))setStatus('cancelled')()}},'Cancelar'))}
+ else acts.push(h('button',{class:'btn alt sm',onclick:setStatus('confirmed')},'Reabrir'));
+ return h('tr',null,h('td',null,fTime.format(new Date(r.starts_at))+' – '+fTime.format(new Date(r.ends_at))),h('td',null,r.customer_name),h('td',null,h('a',{href:'https://wa.me/'+wa,target:'_blank',rel:'noopener'},r.customer_phone)),h('td',null,r.services&&r.services.name),h('td',null,r.professionals&&r.professionals.name),h('td',null,h('span',{class:'badge '+r.status},STATUS[r.status])),h('td',null,h('div',{class:'row',style:'gap:6px'},acts)))}
+function manualForm(){
+ var svc=h('select',{required:true},D.services.filter(function(s){return s.active}).map(function(s){return h('option',{value:s.id},s.name+' ('+s.duration_min+' min)')}));
+ var pro=h('select',{required:true},D.pros.filter(function(p){return p.active}).map(function(p){return h('option',{value:p.id},p.name)}));
+ var when=h('input',{type:'datetime-local',required:true,value:agendaDate+'T11:00',step:'900'});
+ var name=h('input',{type:'text',required:true,maxlength:'80'}),tel=h('input',{type:'tel',required:true});
+ return h('details',{class:'card'},h('summary',{style:'cursor:pointer;font-weight:600;color:#203746'},'+ Novo agendamento manual (telefone ou balcão)'),
+  h('form',{style:'margin-top:16px',onsubmit:function(e){e.preventDefault();
+    var sv=D.services.filter(function(s){return s.id===svc.value})[0];var st=new Date(when.value+':00-03:00');var en=new Date(st.getTime()+sv.duration_min*60000);
+    q(sb.from('appointments').insert({professional_id:pro.value,service_id:svc.value,starts_at:st.toISOString(),ends_at:en.toISOString(),customer_name:name.value.trim(),customer_phone:digits(tel.value)})).then(function(){toast('Agendamento criado');agendaDate=when.value.slice(0,10);agendaView()}).catch(function(err){if(err&&err.code==='23P01')toast('Esse profissional já tem um horário nesse intervalo.',true);else fail(err)})}},
+   h('div',{class:'row'},h('label',{class:'fld'},'Serviço',svc),h('label',{class:'fld'},'Profissional',pro),h('label',{class:'fld'},'Data e hora',when)),
+   h('div',{class:'row',style:'margin-top:12px'},h('label',{class:'fld'},'Nome do cliente',name),h('label',{class:'fld'},'WhatsApp',tel),h('button',{class:'btn',type:'submit'},'Salvar agendamento'))))}
+
+/* ---------- profissionais ---------- */
+function prosView(){
+ var nameIn=h('input',{type:'text',required:true,maxlength:'60',placeholder:'Nome do profissional'});
+ main.append(h('div',{class:'card'},h('h2',{style:'font-size:22px;margin-bottom:12px'},'Novo profissional'),h('form',{class:'row',onsubmit:function(e){e.preventDefault();
+   q(sb.from('professionals').insert({name:nameIn.value.trim(),sort:D.pros.length*10}).select().single()).then(function(p){
+     var days=[2,3,4,5,6];return q(sb.from('working_hours').insert(days.map(function(d){return {professional_id:p.id,weekday:d,start_time:'11:00',end_time:'21:00'}}))).then(function(){return q(sb.from('professional_services').insert(D.services.filter(function(s){return s.active}).map(function(s){return {professional_id:p.id,service_id:s.id}})))})}).then(function(){toast('Profissional criado. Ajuste serviços e horários abaixo.');return reload()}).catch(fail)}},
+   h('label',{class:'fld'},'Nome',nameIn),h('button',{class:'btn',type:'submit'},'Adicionar')),h('p',{class:'muted',style:'margin:10px 0 0'},'O novo profissional começa com todos os serviços e terça a sábado, das 11h às 21h. Ajuste depois.')));
+ if(!D.pros.length)main.append(h('p',{class:'muted'},'Nenhum profissional cadastrado ainda.'));
+ D.pros.forEach(function(p){main.append(proCard(p))})}
+function proCard(p){
+ var name=h('input',{class:'in',type:'text',value:p.name,maxlength:'60','aria-label':'Nome'});
+ var act=h('input',{type:'checkbox',checked:p.active});
+ var mine=D.ps.filter(function(x){return x.professional_id===p.id}).map(function(x){return x.service_id});
+ var svcChk=D.services.map(function(s){var c=h('input',{type:'checkbox',value:s.id,checked:mine.indexOf(s.id)>-1});return h('label',{class:'chk'},c,s.name)});
+ var whBox=h('div',null);
+ DAYS.forEach(function(d){var ints=h('div',{class:'ints'});var rows=D.wh.filter(function(w){return w.professional_id===p.id&&w.weekday===d[0]});
+   function addInt(s,e){var row=h('div',{class:'int'},h('input',{class:'in',type:'time',value:s,'aria-label':d[1]+' início'}),'até',h('input',{class:'in',type:'time',value:e,'aria-label':d[1]+' fim'}),h('button',{class:'btn alt sm',type:'button','aria-label':'Remover intervalo',onclick:function(){row.remove()}},'Remover'));ints.append(row)}
+   rows.forEach(function(w){addInt(hhmm(w.start_time),hhmm(w.end_time))});
+   whBox.append(h('div',{class:'wh','data-day':d[0]},h('strong',null,d[1]),h('div',null,ints,h('button',{class:'btn alt sm',type:'button',style:'margin-top:6px',onclick:function(){addInt('11:00','21:00')}},'+ horário'),rows.length?null:h('span',{class:'muted',style:'margin-left:10px'},'Folga'))))});
+ var offList=D.off.filter(function(o){return o.professional_id===p.id});
+ var offBox=h('div',null,offList.length?offList.map(function(o){return h('div',{class:'row',style:'margin:6px 0;align-items:center'},h('span',null,fShort.format(new Date(o.starts_at))+' → '+fShort.format(new Date(o.ends_at))+(o.reason?' · '+o.reason:'')),h('button',{class:'btn danger sm',onclick:function(){q(sb.from('time_off').delete().eq('id',o.id)).then(function(){toast('Removido');return reload()}).catch(fail)}},'Remover'))}):h('p',{class:'muted',style:'margin:0'},'Nenhuma folga futura.'));
+ var os=h('input',{class:'in',type:'datetime-local',required:true}),oe=h('input',{class:'in',type:'datetime-local',required:true}),orr=h('input',{class:'in',type:'text',placeholder:'Motivo (opcional)',maxlength:'80'});
+ var offForm=h('form',{class:'row',style:'margin-top:10px',onsubmit:function(e){e.preventDefault();if(localToISO(oe.value)<=localToISO(os.value))return toast('O fim precisa ser depois do início.',true);q(sb.from('time_off').insert({professional_id:p.id,starts_at:localToISO(os.value),ends_at:localToISO(oe.value),reason:orr.value.trim()||null})).then(function(){toast('Folga registrada');return reload()}).catch(fail)}},h('label',{class:'fld'},'De',os),h('label',{class:'fld'},'Até',oe),h('label',{class:'fld'},'Motivo',orr),h('button',{class:'btn alt',type:'submit'},'Registrar folga'));
+ var save=h('button',{class:'btn',type:'button',onclick:function(){
+   save.disabled=true;var rows=[],bad=false;
+   whBox.querySelectorAll('.wh').forEach(function(w){var day=+w.getAttribute('data-day');w.querySelectorAll('.int').forEach(function(r){var i=r.querySelectorAll('input');if(!i[0].value||!i[1].value||i[1].value<=i[0].value)bad=true;else rows.push({professional_id:p.id,weekday:day,start_time:i[0].value,end_time:i[1].value})})});
+   if(bad){save.disabled=false;return toast('Confira os horários: o fim precisa ser depois do início.',true)}
+   var chosen=[];svcChk.forEach(function(l){var c=l.querySelector('input');if(c.checked)chosen.push({professional_id:p.id,service_id:c.value})});
+   q(sb.from('professionals').update({name:name.value.trim()||p.name,active:act.checked}).eq('id',p.id)).then(function(){return q(sb.from('working_hours').delete().eq('professional_id',p.id))}).then(function(){return rows.length?q(sb.from('working_hours').insert(rows)):null}).then(function(){return q(sb.from('professional_services').delete().eq('professional_id',p.id))}).then(function(){return chosen.length?q(sb.from('professional_services').insert(chosen)):null}).then(function(){toast('Salvo');return reload()}).catch(function(e){save.disabled=false;fail(e)})}},'Salvar alterações');
+ return h('section',{class:'card'},
+  h('div',{class:'row',style:'align-items:center;margin-bottom:12px'},h('h2',{style:'font-size:24px;flex:0 0 auto'},p.name),h('span',{class:'badge '+(p.active?'done':'cancelled')},p.active?'Ativo':'Inativo')),
+  h('div',{class:'row'},h('label',{class:'fld',style:'flex:1;min-width:200px'},'Nome',name),h('label',{class:'chk',style:'margin-bottom:8px'},act,'Aparece no agendamento online')),
+  h('div',{class:'sep'}),h('h3',{style:'font-size:18px;margin-bottom:8px'},'Serviços que realiza'),h('div',null,svcChk),
+  h('div',{class:'sep'}),h('h3',{style:'font-size:18px'},'Horário de trabalho'),h('p',{class:'muted',style:'margin:4px 0 0'},'Use mais de um intervalo no mesmo dia para marcar almoço. Dia sem horário = folga.'),whBox,
+  h('div',{class:'row'},save),
+  h('div',{class:'sep'}),h('h3',{style:'font-size:18px;margin-bottom:8px'},'Folgas e ausências'),offBox,offForm)}
+
+/* ---------- serviços ---------- */
+function svcsView(){
+ main.append(h('p',{class:'muted',style:'margin:0 0 16px'},'Altere nome, categoria e duração. A duração define quantos minutos o horário fica ocupado.'));
+ D.services.forEach(function(s){
+  var n=h('input',{class:'in',value:s.name,maxlength:'80','aria-label':'Nome',style:'min-width:220px'}),c=h('select',{class:'in','aria-label':'Categoria'},CAT.map(function(x){return h('option',{value:x,selected:x===s.category},x)})),d=h('input',{class:'in',type:'number',min:'10',max:'480',step:'5',value:s.duration_min,'aria-label':'Duração em minutos',style:'width:90px'}),a=h('input',{type:'checkbox',checked:s.active});
+  main.append(h('div',{class:'card'},h('div',{class:'row',style:'align-items:center'},n,c,h('label',{class:'chk',style:'margin:0'},'Duração (min)',d),h('label',{class:'chk',style:'margin:0'},a,'Ativo'),h('button',{class:'btn sm',onclick:function(){q(sb.from('services').update({name:n.value.trim(),category:c.value,duration_min:+d.value,active:a.checked}).eq('id',s.id)).then(function(){toast('Salvo');return reload()}).catch(fail)}},'Salvar'))))});
+ var n=h('input',{class:'in',required:true,maxlength:'80',placeholder:'Nome do serviço'}),c=h('select',{class:'in'},CAT.map(function(x){return h('option',{value:x},x)})),d=h('input',{class:'in',type:'number',min:'10',max:'480',step:'5',value:'45',style:'width:90px'});
+ main.append(h('div',{class:'card'},h('h2',{style:'font-size:22px;margin-bottom:12px'},'Novo serviço'),h('form',{class:'row',onsubmit:function(e){e.preventDefault();q(sb.from('services').insert({name:n.value.trim(),category:c.value,duration_min:+d.value,sort:D.services.length*10+10}).select().single()).then(function(sv){return q(sb.from('professional_services').insert(D.pros.map(function(p){return {professional_id:p.id,service_id:sv.id}})))}).then(function(){toast('Serviço criado');return reload()}).catch(fail)}},n,c,h('label',{class:'chk',style:'margin:0'},'Duração (min)',d),h('button',{class:'btn',type:'submit'},'Adicionar'))))}
+
+sb.auth.onAuthStateChange(function(ev){if(ev==='SIGNED_OUT')loginView()});
+boot();
+})();
+</script>
+</body>
+</html>
