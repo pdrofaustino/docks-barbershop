@@ -59,7 +59,7 @@ var SB_URL='https://vtssoqpxgounsakvkhrm.supabase.co',SB_KEY='sb_publishable_HSe
 var sb=window.supabase.createClient(SB_URL,SB_KEY);
 var app=document.getElementById('app');
 var D={services:[],pros:[],ps:[],wh:[],off:[]};
-var tab='agenda',agendaDate=todayISO();
+var ROLE='admin',tab='agenda',agendaDate=todayISO();
 var CAT=['Cabelo','Barba','Estética'];
 var DAYS=[[1,'Segunda'],[2,'Terça'],[3,'Quarta'],[4,'Quinta'],[5,'Sexta'],[6,'Sábado'],[0,'Domingo']];
 var STATUS={confirmed:'Confirmado',done:'Concluído',cancelled:'Cancelado',no_show:'Faltou'};
@@ -87,7 +87,7 @@ function loginView(msg){app.replaceChildren(h('div',{class:'login'},
  msg?h('p',{role:'alert',style:'margin-top:16px;font-weight:600'},msg):null))}
 function signIn(f){sb.auth.signInWithPassword({email:f.email.value.trim(),password:f.pw.value}).then(function(r){if(r.error)return loginView('E-mail ou senha incorretos, ou e-mail ainda não confirmado.');boot()})}
 function signUp(f){if(!f.reportValidity())return;sb.auth.signUp({email:f.email.value.trim(),password:f.pw.value}).then(function(r){if(r.error)return loginView(r.error.message);loginView('Enviamos um e-mail de confirmação. Clique no link e depois volte aqui para entrar.')})}
-function boot(){sb.auth.getSession().then(function(r){var s=r.data.session;if(!s)return loginView();sb.rpc('is_admin').then(function(x){if(x.error||!x.data){return app.replaceChildren(h('div',{class:'login'},h('h1',null,'Sem permissão'),h('p',null,'O e-mail '+s.user.email+' não tem acesso ao painel. Peça para ser incluído.'),h('button',{class:'btn',onclick:logout},'Sair')))}loadAll().then(function(){shell(s.user.email)}).catch(fail)})})}
+function boot(){sb.auth.getSession().then(function(r){var s=r.data.session;if(!s)return loginView();sb.rpc('is_admin').then(function(x){if(!x.error&&x.data){ROLE='admin';return loadAll().then(function(){shell(s.user.email)}).catch(fail)}sb.rpc('my_professional_id').then(function(y){if(!y.error&&y.data){ROLE='pro';tab='agenda';return loadAll().then(function(){shell(s.user.email)}).catch(fail)}return app.replaceChildren(h('div',{class:'login'},h('h1',null,'Sem permissão'),h('p',null,'O e-mail '+s.user.email+' não tem acesso ao painel. Peça para ser incluído.'),h('button',{class:'btn',onclick:logout},'Sair')))})})})}
 function logout(){sb.auth.signOut().then(function(){loginView()})}
 
 /* ---------- data ---------- */
@@ -98,7 +98,7 @@ function reload(){return loadAll().then(render)}
 /* ---------- shell ---------- */
 var main;
 function shell(email){
- var tabs=h('div',{class:'tabs',role:'group','aria-label':'Seções'},[['agenda','Agenda'],['pros','Profissionais'],['svcs','Serviços']].map(function(t){return h('button',{class:'tab',type:'button','aria-pressed':String(tab===t[0]),onclick:function(){tab=t[0];shell(email)}},t[1])}));
+ var tabs=h('div',{class:'tabs',role:'group','aria-label':'Seções'},(ROLE==='admin'?[['agenda','Agenda'],['pros','Profissionais'],['svcs','Serviços']]:[['agenda','Minha agenda'],['pros','Meus horários']]).map(function(t){return h('button',{class:'tab',type:'button','aria-pressed':String(tab===t[0]),onclick:function(){tab=t[0];shell(email)}},t[1])}));
  main=h('div',null);
  app.replaceChildren(h('div',{class:'top'},h('h1',null,'Painel Docks'),h('span',null,email),h('button',{class:'btn alt sm',onclick:logout},'Sair')),h('div',{class:'wrap'},tabs,main));render()}
 function render(){if(!main)return;main.replaceChildren();if(tab==='agenda')agendaView();else if(tab==='pros')prosView();else svcsView()}
@@ -114,7 +114,7 @@ function agendaView(){
    h('button',{class:'btn alt sm',onclick:function(){agendaDate=addDays(agendaDate,1);agendaView()}},'Próximo dia →'),
    h('button',{class:'btn sm',onclick:function(){agendaDate=todayISO();agendaView()}},'Hoje'))),
   h('div',{class:'card'},h('h2',{style:'font-size:24px;margin-bottom:12px;text-transform:capitalize'},fLong.format(new Date(agendaDate+'T12:00:00-03:00'))),list),
-  manualForm());
+  ROLE==='admin'?manualForm():null);
  var a=new Date(agendaDate+'T00:00:00-03:00').toISOString(),b=new Date(addDays(agendaDate,1)+'T00:00:00-03:00').toISOString();
  q(sb.from('appointments').select('*,services(name,duration_min),professionals(name)').gte('starts_at',a).lt('starts_at',b).order('starts_at')).then(function(rows){
   if(!rows.length){list.replaceChildren(h('p',{class:'muted'},'Nenhum agendamento neste dia.'));return}
@@ -144,7 +144,7 @@ function manualForm(){
 /* ---------- profissionais ---------- */
 function prosView(){
  var nameIn=h('input',{type:'text',required:true,maxlength:'60',placeholder:'Nome do profissional'});
- main.append(h('div',{class:'card'},h('h2',{style:'font-size:22px;margin-bottom:12px'},'Novo profissional'),h('form',{class:'row',onsubmit:function(e){e.preventDefault();
+ if(ROLE==='admin')main.append(h('div',{class:'card'},h('h2',{style:'font-size:22px;margin-bottom:12px'},'Novo profissional'),h('form',{class:'row',onsubmit:function(e){e.preventDefault();
    q(sb.from('professionals').insert({name:nameIn.value.trim(),sort:D.pros.length*10}).select().single()).then(function(p){
      var days=[2,3,4,5,6];return q(sb.from('working_hours').insert(days.map(function(d){return {professional_id:p.id,weekday:d,start_time:'11:00',end_time:'21:00'}}))).then(function(){return q(sb.from('professional_services').insert(D.services.filter(function(s){return s.active}).map(function(s){return {professional_id:p.id,service_id:s.id}})))})}).then(function(){toast('Profissional criado. Ajuste serviços e horários abaixo.');return reload()}).catch(fail)}},
    h('label',{class:'fld'},'Nome',nameIn),h('button',{class:'btn',type:'submit'},'Adicionar')),h('p',{class:'muted',style:'margin:10px 0 0'},'O novo profissional começa com todos os serviços e terça a sábado, das 11h às 21h. Ajuste depois.')));
@@ -152,7 +152,7 @@ function prosView(){
  D.pros.forEach(function(p){main.append(proCard(p))})}
 function proCard(p){
  var name=h('input',{class:'in',type:'text',value:p.name,maxlength:'60','aria-label':'Nome'});
- var act=h('input',{type:'checkbox',checked:p.active});
+ var act=h('input',{type:'checkbox',checked:p.active});var email=h('input',{class:'in',type:'email',value:p.email||'',placeholder:'e-mail de acesso do profissional','aria-label':'E-mail de acesso'});var L=ROLE!=='admin';
  var mine=D.ps.filter(function(x){return x.professional_id===p.id}).map(function(x){return x.service_id});
  var svcChk=D.services.map(function(s){var c=h('input',{type:'checkbox',value:s.id,checked:mine.indexOf(s.id)>-1});return h('label',{class:'chk'},c,s.name)});
  var whBox=h('div',null);
@@ -169,11 +169,11 @@ function proCard(p){
    whBox.querySelectorAll('.wh').forEach(function(w){var day=+w.getAttribute('data-day');w.querySelectorAll('.int').forEach(function(r){var i=r.querySelectorAll('input');if(!i[0].value||!i[1].value||i[1].value<=i[0].value)bad=true;else rows.push({professional_id:p.id,weekday:day,start_time:i[0].value,end_time:i[1].value})})});
    if(bad){save.disabled=false;return toast('Confira os horários: o fim precisa ser depois do início.',true)}
    var chosen=[];svcChk.forEach(function(l){var c=l.querySelector('input');if(c.checked)chosen.push({professional_id:p.id,service_id:c.value})});
-   q(sb.from('professionals').update({name:name.value.trim()||p.name,active:act.checked}).eq('id',p.id)).then(function(){return q(sb.from('working_hours').delete().eq('professional_id',p.id))}).then(function(){return rows.length?q(sb.from('working_hours').insert(rows)):null}).then(function(){return q(sb.from('professional_services').delete().eq('professional_id',p.id))}).then(function(){return chosen.length?q(sb.from('professional_services').insert(chosen)):null}).then(function(){toast('Salvo');return reload()}).catch(function(e){save.disabled=false;fail(e)})}},'Salvar alterações');
+   (L?Promise.resolve():q(sb.from('professionals').update({name:name.value.trim()||p.name,active:act.checked,email:email.value.trim().toLowerCase()||null}).eq('id',p.id))).then(function(){return q(sb.from('working_hours').delete().eq('professional_id',p.id))}).then(function(){return rows.length?q(sb.from('working_hours').insert(rows)):null}).then(function(){return L?null:q(sb.from('professional_services').delete().eq('professional_id',p.id))}).then(function(){return !L&&chosen.length?q(sb.from('professional_services').insert(chosen)):null}).then(function(){toast('Salvo');return reload()}).catch(function(e){save.disabled=false;fail(e)})}},'Salvar alterações');
  return h('section',{class:'card'},
   h('div',{class:'row',style:'align-items:center;margin-bottom:12px'},h('h2',{style:'font-size:24px;flex:0 0 auto'},p.name),h('span',{class:'badge '+(p.active?'done':'cancelled')},p.active?'Ativo':'Inativo')),
-  h('div',{class:'row'},h('label',{class:'fld',style:'flex:1;min-width:200px'},'Nome',name),h('label',{class:'chk',style:'margin-bottom:8px'},act,'Aparece no agendamento online')),
-  h('div',{class:'sep'}),h('h3',{style:'font-size:18px;margin-bottom:8px'},'Serviços que realiza'),h('div',null,svcChk),
+  L?null:h('div',{class:'row'},h('label',{class:'fld',style:'flex:1;min-width:200px'},'Nome',name),h('label',{class:'fld',style:'flex:1;min-width:240px'},'E-mail de acesso ao painel',email),h('label',{class:'chk',style:'margin-bottom:8px'},act,'Aparece no agendamento online')),
+  L?null:h('div',{class:'sep'}),L?null:h('h3',{style:'font-size:18px;margin-bottom:8px'},'Serviços que realiza'),L?null:h('div',null,svcChk),
   h('div',{class:'sep'}),h('h3',{style:'font-size:18px'},'Horário de trabalho'),h('p',{class:'muted',style:'margin:4px 0 0'},'Use mais de um intervalo no mesmo dia para marcar almoço. Dia sem horário = folga.'),whBox,
   h('div',{class:'row'},save),
   h('div',{class:'sep'}),h('h3',{style:'font-size:18px;margin-bottom:8px'},'Folgas e ausências'),offBox,offForm)}
